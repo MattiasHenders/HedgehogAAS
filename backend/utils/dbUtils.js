@@ -12,7 +12,7 @@ const connectToMongo = async () => {
     console.log("Connecting...");
 
     //Connect attempt
-    await mongoose.connect(process.env.MONGODB_URI + process.env.MONGO_DATABASE, {
+    await mongoose.connect(process.env.MONGO_URL + process.env.MONGO_DATABASE, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       })

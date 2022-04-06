@@ -1,66 +1,35 @@
-//Imports 
-const jwt = require('jsonwebtoken');
+//Package Imports
+const express = require('express');
+const router = express.Router();
 
 //Module Imports
 const sendResponse = require('../utils/responseUtils');
+const auth = require('../utils/authUtils').auth;
 
 //Allowed error codes
-const CODES = require("../responseCodes");
+const CODES = require("../utils/responseCodes");
 
 //Environment Variables
 require('dotenv').config();
 
 /**
- * Authenticates a request by checking the token
- * @param {request} req 
- * @param {response} res 
- * @param {next handler} next 
- * @returns an error if not authenticated
+ * POST request for login to account
+ * @param {requests} req
+ * @param {response} res
  */
-const verifyToken = (req, res, next) => {
+router.post(`/login`, async (req, res) => {
 
-    try {
 
-        if (req.cookies.Authorization === undefined) {
-            throw new Error("No Authorization Token!")
-        }
-        let bearerToken = req.cookies.Authorization
-        if (!bearerToken.startsWith("Bearer ")) {
-            throw new Error("Invalid Bearer Token!")
-        }
-
-        let authToken = bearerToken.substring(7, bearerToken.length);
-
-        if (!authToken) {
-            return sendResponse(res, CODES.FORBIDDEN, `Forbidden: A token is required for authentication`, undefined);
-        }
-
-        const decoded = jwt.verify(authToken, process.env.TOKEN_SECRET);
-        req.user = decoded;
-
-    } catch (err) {
-        return sendResponse(res, CODES.UNAUTHORIZED, `Unauthorized: ${err.message}`, undefined);
-    }
-
-    return next();
-};
+});
 
 /**
- * Authenticates a request is an admin by checking the token
- * @param {request} req 
- * @param {response} res 
- * @param {next handler} next 
- * @returns an error if not authenticated admin user
+ * POST request for sign up
+ * @param {requests} req
+ * @param {response} res
  */
-const verifyAdmin = (req, res, next) => {
-    //Next check if user that sent the token is admin
-    if (req.user.role !== "admin") {
-        return sendResponse(res, CODES.UNAUTHORIZED, `Unauthorized: No admin privileges on this account`, undefined);
-    }
-    return next();
-};
+router.post(`/signup`, async (req, res) => {
 
-module.exports = {
-    verify: verifyToken,
-    verifyAdmin: verifyAdmin
-}
+
+});
+
+module.exports = router;
