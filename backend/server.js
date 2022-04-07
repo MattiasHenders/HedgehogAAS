@@ -13,6 +13,7 @@ require("./utils/dbUtils").connect();
     
 //Router Imports
 const authRouter = require('./routes/authRouter');
+const codesRouter = require('./routes/codesRouter');
 
 //Environment Variables
 require('dotenv').config();
@@ -57,6 +58,7 @@ app.all('*', (req, res, next) => {
 
 //Authorization routes
 app.use(`${ROOT_PATH}/auth`, authRouter);
+app.use(`${ROOT_PATH}/codes`, codesRouter);
 
 // Close DB connection when server shuts down
 process.on('SIGINT', () => {
