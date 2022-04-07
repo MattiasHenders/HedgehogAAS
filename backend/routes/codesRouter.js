@@ -88,7 +88,7 @@ const sendCodeImage = (res, dir, code) => {
         }
 
         //Return filepath to user in JSON
-        return sendResponse(res, CODES.OK, `Found a hedgehog for code ${code}}.`, responseJSON)
+        return sendResponse(res, CODES.OK, `Found a hedgehog for code ${code}.`, responseJSON)
         
       });
 }
