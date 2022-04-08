@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 //Module Imports
+const deleteUtils = require('../utils/deleteUtils');
 const sendResponse = require('../utils/responseUtils');
 
 //Allowed error codes
@@ -24,22 +25,22 @@ router.delete(`/`, async (req, res) => {
     //ID of the image
     let imgID = req.body.id;
 
-    //Remove the image
-    let resp = undefined;
-    try {
-        resp = await Hedgehog.deleteOne({ "_id": {"$eq": imgID}});
-    } catch (e) {
-        resp = undefined;
-    }
+    deleteUtils.deleteOne(imgID)
+    .then((resp) => {
 
-    //Check for removal success
-    if (!resp || !resp.deletedCount || resp.deletedCount !== 1) {
+        //Check for removal success
+        if (!resp || resp.deletedCount !== 1) {
 
-        return sendResponse(res, CODES.BAD_REQUEST, `Did not find image to delete!`, resp);
-    } else {
+            return sendResponse(res, CODES.BAD_REQUEST, `Did not find image to delete!`, resp);
+        } else {
 
-        return sendResponse(res, CODES.OK, `Deleted hedgehog`, resp);
-    }
+            return sendResponse(res, CODES.OK, `Deleted hedgehog`, resp);
+        }
+    })
+    .catch ((err) => {
+
+        return sendResponse(res, CODES.SERVER_ERROR, `Couldn't delete for some reason`, err);
+    });
 });
 
 
