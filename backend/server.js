@@ -2,11 +2,13 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
-//Module Imports
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+
+//Module Imports
+const CODES = require("./utils/responseCodes");
+const sendResponse = require('./utils/responseUtils');
 
 //Connect to DB
 require("./utils/dbUtils").connect();
@@ -15,6 +17,7 @@ require("./utils/dbUtils").connect();
 const authRouter = require('./routes/authRouter');
 const codesRouter = require('./routes/codesRouter');
 const randomRouter = require('./routes/randomRouter');
+const deleteRouter = require('./routes/deleteRouter');
 
 //Environment Variables
 require('dotenv').config();
@@ -61,10 +64,18 @@ app.all('*', (req, res, next) => {
 app.use(`${ROOT_PATH}/auth`, authRouter);
 app.use(`${ROOT_PATH}/codes`, codesRouter);
 app.use(`${ROOT_PATH}/random`, randomRouter);
+app.use(`${ROOT_PATH}/delete`, deleteRouter);
+
+//404 Handler
+app.get('*', (req, res) => {
+    return sendResponse(res, CODES.NOT_FOUND, `Route Not Found!`)
+});
 
 // Close DB connection when server shuts down
 process.on('SIGINT', () => {
+
     mongoose.connection.close( () => {
+
         console.log('Mongoose disconnected on app termination');
         process.exit(0);
     });
