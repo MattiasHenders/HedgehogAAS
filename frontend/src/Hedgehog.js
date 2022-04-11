@@ -14,8 +14,7 @@ export default class Customers extends Component {
     super(props)
     this.state = {
       id: undefined,
-      imgURL: undefined,
-      title: "Click Below to Get a Hedgehog!"
+      imgURL: undefined
     }
   }
 
@@ -24,7 +23,7 @@ export default class Customers extends Component {
     this.getHedgehog();
   }
 
-  //Function to get the Customer Data from json
+  //Function to get the image from server
   getHedgehog() {
 
     let request = `${process.env.REACT_APP_SERVER}/api/v1/random`
@@ -37,7 +36,7 @@ export default class Customers extends Component {
     })
   };
 
-  //Function to get the Customer Data from json
+  //Function to delete the image from server
   deleteHedgehog() {
 
     let request = `${process.env.REACT_APP_SERVER}/api/v1/delete`
@@ -65,23 +64,20 @@ export default class Customers extends Component {
     <div className="addmargin hedgehogContainer">
       <div className="col-md-8 hedgehogContents">
         {
-          <Panel bsStyle="info" key={this.state.title} className="centeralign">
-            <Panel.Heading>
-              <Panel.Title componentClass="h3">{this.state.title}</Panel.Title>
-            </Panel.Heading>
+          <Panel className="centeralign">
             
             <Image src={this.state.imgURL} className="hedgehogImg" rounded />
 
             <Panel.Body>
-              <Button bsStyle="info" onClick={() => {
+              <Button className='getBtn' onClick={() => {
                   this.getHedgehog();
                 }}>
 
                 Click to View A New Hedgehog
 
               </Button>
-
-              <Button bsStyle="danger" onClick={() => {
+              <br/>
+              <Button className='deleteBtn' onClick={() => {
                   this.deleteHedgehog();
                 }}>
 

@@ -1,16 +1,3 @@
-.hedgehogContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.hedgehogImg {
-    width: 50vw;
-    height: auto;
-
-    margin: 10px;
-}
-
 .getBtn {
     background-color: #6d724f;
     border-radius: 13px;
