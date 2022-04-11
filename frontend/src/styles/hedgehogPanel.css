@@ -1,0 +1,12 @@
+.hedgehogContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hedgehogImg {
+    width: 40vw;
+    height: auto;
+
+    margin: 10px;
+}
