@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import Panel from 'react-bootstrap/lib/Panel'
-import Button from 'react-bootstrap/lib/Button'
+import { Link } from 'react-router-dom';
 
 import './styles/hedgehogPanel.css'
-import { Title } from 'react-bootstrap/lib/Modal';
 
 let codes = require('./data/codeList.json');
 
@@ -38,13 +37,14 @@ export default class Customers extends Component {
             <Panel>
               {
               codes.map((code) => {
+
                 return(
                   <div>
-                    <Button onClick={() => {
-                      
+                    <Link to={{
+                      pathname: `/hedgehog/?code=${code.code}`
                     }}>
                       Get Hedgehog For {code.code}
-                    </Button>
+                    </Link>
                   </div>
                 )
               })
